@@ -1,0 +1,75 @@
+{
+  "name": "ezly",
+  "version": "0.0.0",
+  "description": "An easy API wrapper for Izly.",
+  "repository": "https://github.com/LiterateInk/Ezly",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "import": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    },
+    "require": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "release": "release-it",
+    "lint": "tsc && eslint ."
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "izly",
+    "crous",
+    "wrapper",
+    "api"
+  ],
+  "author": "LiterateInk <contact@literate.ink> (https://literate.ink)",
+  "homepage": "https://docs.literate.ink/ezly",
+  "bugs": {
+    "url": "https://github.com/LiterateInk/Ezly/issues"
+  },
+  "license": "GPL-3.0-or-later",
+  "engines": {
+    "node": ">=18"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release v${version}",
+      "tagAnnotation": "Release v${version}",
+      "tagName": "js-v${version}"
+    },
+    "github": {
+      "draft": false,
+      "release": true,
+      "releaseName": "js v${version}"
+    },
+    "npm": {
+      "publish": false
+    },
+    "hooks": {
+      "before:init": "pnpm lint"
+    }
+  },
+  "devDependencies": {
+    "@stylistic/eslint-plugin": "^2.7.2",
+    "@types/node": "^22.5.1",
+    "@typescript-eslint/parser": "^8.3.0",
+    "dotenv": "^16.4.5",
+    "eslint": "^9.9.1",
+    "release-it": "^17.6.0",
+    "terser": "^5.31.6",
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@literate.ink/utilities": "1.0.0-10479345192.1"
+  }
+}
