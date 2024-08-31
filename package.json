@@ -70,6 +70,7 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "@literate.ink/utilities": "1.0.0-10479345192.1"
+    "@literate.ink/utilities": "1.0.0-10641118381.1",
+    "fast-xml-parser": "^4.4.1"
   }
 }
