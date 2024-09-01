@@ -55,7 +55,7 @@ export const login = async (identifier: string, secret: string, fetcher: Fetcher
   }
 
   return {
-    uid: parsed.UserData.UID as number,
+    uid: parsed.UserData.UID as string,
     salt: parsed.UserData.SALT as string
   };
 };
