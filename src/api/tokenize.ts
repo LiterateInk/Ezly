@@ -6,7 +6,7 @@ import { xml } from "~/core/xml";
 
 import { decodeBalance } from "~/decoders/balance";
 import type { Profile, Identification, Configuration } from "~/models";
-import { setDeviceToken } from "./private/set-device-token";
+// import { setDeviceToken } from "./private/set-device-token";
 
 export const tokenize = async (url: string, fetcher: Fetcher = defaultFetcher) => {
   let response = await fetcher({ url: new URL(url), redirect: "manual" });
@@ -68,20 +68,15 @@ export const tokenize = async (url: string, fetcher: Fetcher = defaultFetcher) =
   const output = {
     configuration: {
       currency: Logon.CUR,
-      p2pPayMin: parseFloat(Logon.P2PPAYMIN),
-      p2pPayMax: parseFloat(Logon.P2PPAYMAX),
-      p2pPayPartMin: parseFloat(Logon.P2PPAYPARTMIN),
-      p2pPayPartMax: parseFloat(Logon.P2PPAYPARTMAX),
+      paymentMinimum: parseFloat(Logon.P2PPAYMIN),
+      paymentMaximum: parseFloat(Logon.P2PPAYMAX),
+      paymentPartMinimum: parseFloat(Logon.P2PPAYPARTMIN),
+      paymentPartMaximum: parseFloat(Logon.P2PPAYPARTMAX),
 
-      moneyInMin: parseFloat(Logon.MONEYINMIN),
-      moneyInMax: parseFloat(Logon.MONEYINMAX),
-      moneyOutMin: parseFloat(Logon.MONEYOUTMIN),
-      moneyOutMax: parseFloat(Logon.MONEYOUTMAX),
-
-      p2pRequestAmount: parseFloat(Logon.NBP2PREQUEST),
-      p2pGetAmount: parseFloat(Logon.NBP2PGET),
-
-      transactionAmount: parseFloat(Logon.NBTRANSAC)
+      moneyInMinimum: parseFloat(Logon.MONEYINMIN),
+      moneyInMaximum: parseFloat(Logon.MONEYINMAX),
+      moneyOutMinimum: parseFloat(Logon.MONEYOUTMIN),
+      moneyOutMaximum: parseFloat(Logon.MONEYOUTMAX)
     } as Configuration,
 
     identification: {
@@ -98,8 +93,11 @@ export const tokenize = async (url: string, fetcher: Fetcher = defaultFetcher) =
       qrCodePrivateKey: Logon.QR_CODE_PRIVATE_KEY,
 
       accessToken: Logon.OAUTH.ACCESS_TOKEN,
-      accessTokenExpiresIn: Logon.OAUTH.EXPIRES_IN,
-      refreshToken: Logon.OAUTH.REFRESH_TOKEN
+      accessTokenExpiresIn: parseInt(Logon.OAUTH.EXPIRES_IN),
+      refreshToken: Logon.OAUTH.REFRESH_TOKEN,
+
+      // reauth data
+      refreshCount: 0
     } as Identification,
 
     balance: decodeBalance(Logon.UP),
@@ -113,7 +111,8 @@ export const tokenize = async (url: string, fetcher: Fetcher = defaultFetcher) =
   };
 
   // register the token for this session id
-  await setDeviceToken(output.identification, fetcher);
+  // EDIT: apparently only for GCM (Google Cloud Messaging)
+  // await setDeviceToken(output.identification, fetcher);
 
   return output;
 };
