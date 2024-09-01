@@ -16,6 +16,10 @@ Since we're implementing this library in different programming languages, we hav
 | :---:  | :---: | :---: | :---: |
 | Kotlin | C# | Dart | |
 
+## Acknowledgements
+
+- [`IzlyProtocolDocumentation`](https://github.com/IzlyOpenSource/IzlyProtocolDocumentation) by [`@IzlyOpenSource`](https://github.com/IzlyOpenSource)
+
 ## License
 
 This project is licensed under the GPL-3.0 License - see the [LICENSE.md](LICENSE.md) file for details.
