@@ -23,4 +23,6 @@ export type Identification = Readonly<{
   accessToken: string
   accessTokenExpiresIn: number
   refreshToken: string
-}>;
+}> & {
+  refreshCount: number
+};
