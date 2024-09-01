@@ -4,3 +4,10 @@ export class ReauthenticateError extends Error {
     this.name = "ReauthenticateError";
   }
 }
+
+export class NotRefreshableError extends Error {
+  constructor() {
+    super("Another session might've been created, you can't continue with this one since it expired");
+    this.name = "NotRefreshableError";
+  }
+}

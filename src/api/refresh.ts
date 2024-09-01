@@ -1,7 +1,7 @@
 import { defaultFetcher, type Fetcher, type Request } from "@literate.ink/utilities";
 import { CLIENT_TYPE, SERVICE_VERSION } from "~/core/constants";
 import { otp } from "./private/otp";
-import type { Identification } from "~/models";
+import { NotRefreshableError, type Identification } from "~/models";
 
 export const refresh = async (identification: Identification, secret: string, fetcher: Fetcher = defaultFetcher): Promise<void> => {
   const passOTP = secret + otp(identification.seed, identification.refreshCount);
@@ -29,6 +29,15 @@ export const refresh = async (identification: Identification, secret: string, fe
 
   const response = await fetcher(request);
   const json = JSON.parse(response.content);
+  if ("Code" in response) {
+    if (response.Code === 571) {
+      // for some reason, people might receive an SMS
+      // at this moment, but the URL in the SMS
+      // is completely unusable...
+      throw new NotRefreshableError();
+    }
+  }
+
   const result = json.LogonLightResult.Result;
   identification.sessionID = result.SessionId;
 
