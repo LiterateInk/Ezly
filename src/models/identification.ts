@@ -8,7 +8,6 @@ export type Identification = Readonly<{
   identifier: string
 
   userID: string
-  sessionID: string
   seed: string
   nsse: string
 
@@ -24,5 +23,6 @@ export type Identification = Readonly<{
   accessTokenExpiresIn: number
   refreshToken: string
 }> & {
+  sessionID: string
   refreshCount: number
 };
