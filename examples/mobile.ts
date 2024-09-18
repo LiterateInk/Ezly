@@ -10,7 +10,8 @@ void async function main () {
   const url = prompt(`Please, enter the URL you want to tokenize for UID '${uid}':`)?.trim();
   if (!url) throw new Error("No URL provided");
 
-  const { identification, profile, configuration, balance } = await izly.tokenize(url);
+  const activationURL = await izly.extractActivationURL(url);
+  const { identification, profile, configuration, balance } = await izly.tokenize(activationURL);
 
   // Let's save the auth object for usage in other files without
   // re-doing the whole authentication...

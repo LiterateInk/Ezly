@@ -8,7 +8,7 @@ import { decodeBalance } from "~/decoders/balance";
 import type { Profile, Identification, Configuration } from "~/models";
 // import { setDeviceToken } from "./private/set-device-token";
 
-export const tokenize = async (url: string, fetcher: Fetcher = defaultFetcher) => {
+export const extractActivationURL = async (url: string, fetcher: Fetcher = defaultFetcher): Promise<string> => {
   let response = await fetcher({ url: new URL(url), redirect: "manual" });
   const location = getHeaderFromResponse(response, "Location");
 
@@ -16,9 +16,13 @@ export const tokenize = async (url: string, fetcher: Fetcher = defaultFetcher) =
     throw new Error("URL to tokenize expired");
   }
 
+  return location;
+};
+
+export const tokenize = async (url: string, fetcher: Fetcher = defaultFetcher) => {
   // encoded like this:
   // izly://SBSCR/<identifier>/<code>
-  const parts = location.split("/");
+  const parts = url.split("/");
   const code = parts.pop()!;
   const identifier = parts.pop()!;
 
@@ -50,7 +54,7 @@ export const tokenize = async (url: string, fetcher: Fetcher = defaultFetcher) =
     method: "POST"
   };
 
-  response = await fetcher(request);
+  const response = await fetcher(request);
 
   const result = findValueBetween(response.content, "<LogonResult>", "</LogonResult>");
   if (!result) throw new Error("No <LogonResult> found in response");
