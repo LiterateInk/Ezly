@@ -61,10 +61,11 @@
   "devDependencies": {
     "@stylistic/eslint-plugin": "^2.7.2",
     "@types/node": "^22.5.1",
-    "@types/node-forge": "^1.3.11",
+    "@types/qrcode": "^1.5.5",
     "@typescript-eslint/parser": "^8.3.0",
     "dotenv": "^16.4.5",
     "eslint": "^9.9.1",
+    "qrcode": "^1.5.4",
     "release-it": "^17.6.0",
     "terser": "^5.31.6",
     "tsup": "^8.2.4",
@@ -72,7 +73,12 @@
   },
   "dependencies": {
     "@literate.ink/utilities": "1.0.0-10641118381.1",
-    "fast-xml-parser": "^4.4.1",
-    "node-forge": "^1.3.1"
+    "@noble/curves": "^1.6.0",
+    "@noble/hashes": "^1.5.0",
+    "@peculiar/asn1-ecc": "^2.3.14",
+    "@peculiar/asn1-pkcs8": "^2.3.13",
+    "@peculiar/asn1-schema": "^2.3.13",
+    "@scure/base": "^1.1.8",
+    "fast-xml-parser": "^4.4.1"
   }
 }
