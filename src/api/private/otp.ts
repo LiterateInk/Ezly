@@ -1,8 +1,16 @@
 import { base64url, base64 } from "@scure/base";
 import { packBigEndian } from "~/core/pack";
 import { hashWithHMAC } from "~/core/hmac";
+import { Identification } from "~/models";
 
-export const otp = (seed: string, counter: number): string => {
-  const packedCounter = packBigEndian(counter);
-  return base64url.encode(hashWithHMAC(packedCounter, base64.decode(seed)));
+export const otp = (identification: Identification): string => {
+  const packedCounter = packBigEndian(identification.counter);
+  const hotp = base64url.encode(hashWithHMAC(packedCounter, base64.decode(identification.seed)));
+
+  // Increment the counter !
+  // That's why the `identification` object
+  // should be saved (by the user) after calling this function.
+  identification.counter++;
+
+  return hotp;
 };

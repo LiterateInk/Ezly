@@ -100,8 +100,7 @@ export const tokenize = async (url: string, fetcher: Fetcher = defaultFetcher) =
       accessTokenExpiresIn: parseInt(Logon.OAUTH.EXPIRES_IN),
       refreshToken: Logon.OAUTH.REFRESH_TOKEN,
 
-      // reauth data
-      refreshCount: 0
+      counter: 0
     } as Identification,
 
     balance: decodeBalance(Logon.UP),

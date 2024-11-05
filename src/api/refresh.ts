@@ -4,9 +4,7 @@ import { otp } from "./private/otp";
 import { NotRefreshableError, type Identification } from "~/models";
 
 export const refresh = async (identification: Identification, secret: string, fetcher: Fetcher = defaultFetcher): Promise<void> => {
-  const passOTP = secret + otp(identification.seed, identification.refreshCount);
-  // mutate directly
-  identification.refreshCount++;
+  const passOTP = secret + otp(identification);
 
   const request: Request = {
     url: new URL("https://rest.izly.fr/Service/PublicService.svc/rest/LogonLight"),
