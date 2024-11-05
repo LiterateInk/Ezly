@@ -1,5 +1,5 @@
 import * as izly from "../src";
-import { read } from "./_persisted-session";
+import { persist, read } from "./_persisted-session";
 import { toString as qrcode } from "qrcode";
 
 void async function main () {
@@ -10,4 +10,6 @@ void async function main () {
   qrcode(data, { type: "utf8" }, (_, qr) => {
     console.log(qr);
   });
+
+  await persist(identification);
 }();

@@ -31,7 +31,7 @@ const signWithPrivateKey = (textToSign: string, pem: string): Uint8Array => {
  */
 export const qrPay = (identification: Identification): string => {
   // Replicate `SimpleDateFormat("yyyy-MM-dd HH:mm:ss")`
-  const dateFormatter = new Intl.DateTimeFormat("en-CA", { timeZone: "UTC", year: "numeric", month: "2-digit", day: "2-digit", hour12: false, second: "2-digit", minute: "2-digit", hour: "2-digit" });
+  const dateFormatter = new Intl.DateTimeFormat("fr-CA", { timeZone: "UTC", year: "numeric", month: "2-digit", day: "2-digit", hour12: false, second: "2-digit", minute: "2-digit", hour: "2-digit" });
   const dateNowFormatted = dateFormatter.format(new Date()).replace(",", "");
 
   let hotpCode = otp(identification.seed, identification.refreshCount);
@@ -45,5 +45,7 @@ export const qrPay = (identification: Identification): string => {
   content = content + ";" + bytesToHex(hashWithHMAC(`${content}+${identification.nsse}`, hmacKey)) + ";";
 
   const signed = signWithPrivateKey(content, privateKey);
-  return base64.encode(signed);
+  content += base64.encode(signed);
+
+  return content;
 };
