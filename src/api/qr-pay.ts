@@ -32,20 +32,17 @@ const signWithPrivateKey = (textToSign: string, pem: string): Uint8Array => {
 export const qrPay = (identification: Identification): string => {
   // Replicate `SimpleDateFormat("yyyy-MM-dd HH:mm:ss")`
   const dateFormatter = new Intl.DateTimeFormat("fr-CA", { timeZone: "UTC", year: "numeric", month: "2-digit", day: "2-digit", hour12: false, second: "2-digit", minute: "2-digit", hour: "2-digit" });
-  const dateNowFormatted = dateFormatter.format(new Date()).replace(",", "");
+  const date = dateFormatter.format(new Date()).replace(",", "");
 
-  let hotpCode = otp(identification.seed, identification.refreshCount);
-  identification.refreshCount++;
+  const hotpCode = otp(identification.seed, identification.refreshCount);
+  identification.refreshCount++; // should increment because we called `otp()`
+  const substring = hotpCode.substring(0, hotpCode.length - 1);
 
-  const GUID = identification.userPublicID;
-  const hmacKey = hotpCode.substring(0, hotpCode.length - 1);
-  const privateKey = identification.qrCodePrivateKey;
+  const str = `${QrCodeMode.IZLY};${identification.userPublicID};${date};3`;
+  let sb = str + ";";
+  sb += bytesToHex(hashWithHMAC(`${str}+${identification.nsse}`, substring)) + ";";
 
-  let content = QrCodeMode.IZLY + ";" + GUID + ";" + dateNowFormatted + ";3";
-  content = content + ";" + bytesToHex(hashWithHMAC(`${content}+${identification.nsse}`, hmacKey)) + ";";
+  const signed = base64.encode(signWithPrivateKey(sb, identification.qrCodePrivateKey));
 
-  const signed = signWithPrivateKey(content, privateKey);
-  content += base64.encode(signed);
-
-  return content;
+  return sb + signed;
 };
