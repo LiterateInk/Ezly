@@ -60,7 +60,7 @@ const sign = (content: string, keyInfo: string): Uint8Array => {
  */
 export const qrPay = (identification: Identification): string => {
   // Replicate `SimpleDateFormat("yyyy-MM-dd HH:mm:ss")`
-  const dateFormatter = new Intl.DateTimeFormat("fr-CA", { timeZone: "UTC", year: "numeric", month: "2-digit", day: "2-digit", hour12: false, second: "2-digit", minute: "2-digit", hour: "2-digit" });
+  const dateFormatter = new Intl.DateTimeFormat("en-CA", { timeZone: "UTC", year: "numeric", month: "2-digit", day: "2-digit", hour12: false, second: "2-digit", minute: "2-digit", hour: "2-digit" });
   const date = dateFormatter.format(new Date()).replace(",", "");
   const hotpCode = otp(identification);
 
