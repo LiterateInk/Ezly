@@ -1,6 +1,6 @@
 {
   "name": "ezly",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "An easy API wrapper for Izly.",
   "repository": "https://github.com/LiterateInk/Ezly",
   "sideEffects": false,
