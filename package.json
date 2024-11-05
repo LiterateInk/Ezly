@@ -19,8 +19,7 @@
   },
   "scripts": {
     "build": "tsup",
-    "release": "release-it",
-    "lint": "tsc && eslint ."
+    "checks": "tsc && eslint ."
   },
   "files": [
     "dist"
@@ -40,24 +39,6 @@
   "engines": {
     "node": ">=18"
   },
-  "release-it": {
-    "git": {
-      "commitMessage": "chore: release v${version}",
-      "tagAnnotation": "Release v${version}",
-      "tagName": "js-v${version}"
-    },
-    "github": {
-      "draft": false,
-      "release": true,
-      "releaseName": "js v${version}"
-    },
-    "npm": {
-      "publish": false
-    },
-    "hooks": {
-      "before:init": "pnpm lint"
-    }
-  },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^2.7.2",
     "@types/node": "^22.5.1",
@@ -66,7 +47,6 @@
     "dotenv": "^16.4.5",
     "eslint": "^9.9.1",
     "qrcode": "^1.5.4",
-    "release-it": "^17.6.0",
     "terser": "^5.31.6",
     "tsup": "^8.2.4",
     "typescript": "^5.5.4"
