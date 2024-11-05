@@ -1,28 +1,84 @@
 /**
- * can only be retrieved during `tokenize()` process
+ * Can only be retrieved during `tokenize()` process,
+ * so make sure to save it !
  */
 export type Identification = Readonly<{
   /**
-   * User's phone number most of the time.
+   * Identifier of the user, probably the phone number.
+   * @from Logon.UID
    */
   identifier: string
 
+  /**
+   * @from Logon.USER_ID
+   */
   userID: string
+
+  /**
+   * Not relevant to users, should only be used internally.
+   * @from Logon.SEED
+   */
   seed: string
+  /**
+   * Not relevant to users, should only be used internally.
+   * @from Logon.NSSE
+   */
   nsse: string
 
-  // for soap
+  /**
+   * Token used for SOAP requests.
+   * Not relevant to users, should only be used internally.
+   * @from Logon.TOKEN
+   */
   token: string
 
+  /**
+   * Also known as `GUID` in the app internals.
+   * Not relevant to users, should only be used internally.
+   * @from Logon.USER_PUBLIC_ID
+   */
   userPublicID: string
-  // used to show the qr code
+
+  /**
+   * Key used to generate QR code for payment.
+   * If you want to generate a QR code, use `izly.qrPay()`.
+   * Not relevant to users, should only be used internally.
+   * @from Logon.QR_CODE_PRIVATE_KEY
+   */
   qrCodePrivateKey: string
 
-  // for oauth
+  /**
+   * OAuth token used for REST requests.
+   * Not relevant to users, should only be used internally.
+   * @from Logon.OAUTH.ACCESS_TOKEN
+   */
   accessToken: string
+
+  /**
+   * Time when the OAuth token used for REST requests expires.
+   * @from Logon.OAUTH.EXPIRES_IN
+   */
   accessTokenExpiresIn: number
+
+  /**
+   * Token used to refresh the OAuth token used for REST requests.
+   * If you want to refresh the token, use `izly.refresh()`.
+   * Not relevant to users, should only be used internally.
+   * @from Logon.OAUTH.ACCESS_TOKEN
+   */
   refreshToken: string
 }> & {
+  /**
+   * ID of the session.
+   * Required for most requests and is renewed at when `izly.refresh()` is called.
+   * Not relevant to users, should only be used internally.
+   * @from Logon.SID
+   */
   sessionID: string
-  refreshCount: number
+
+  /**
+   * Incremented each time `otp()` is called.
+   * Not relevant to users, should only be used internally.
+   */
+  counter: number
 };
