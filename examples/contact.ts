@@ -3,7 +3,7 @@ import { read } from "./_persisted-session";
 
 void async function main () {
   const identification = await read();
-  const contact = await izly.contact({ ...identification });
+  const contact = await izly.contact(identification);
 
-  console.log(contact);
+  console.dir(contact, { depth: Infinity });
 }();
