@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@literate.ink/utilities':
-        specifier: 1.0.0-10641118381.1
-        version: 1.0.0-10641118381.1
+        specifier: 1.0.0-11713907881.1
+        version: 1.0.0-11713907881.1
       '@noble/curves':
         specifier: ^1.6.0
         version: 1.6.0
@@ -269,8 +269,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@literate.ink/utilities@1.0.0-10641118381.1':
-    resolution: {integrity: sha512-omhzgwfAjNXqIjt6dmWbU8pm6QfEvNYetykEXYk+vVaJ8oICglvkChxkC6FkF8zJKMM/lFrNHgD42obQ8lwolQ==}
+  '@literate.ink/utilities@1.0.0-11713907881.1':
+    resolution: {integrity: sha512-+RdZqu5dor5YQfL0CRSGPb9Gl6qCsXusziJZt84KxmJsL55ElPSc35AR4CNITzsYg7rAXVnoUCf8fXpaSeWJsg==}
 
   '@noble/curves@1.6.0':
     resolution: {integrity: sha512-TlaHRXDehJuRNR9TfZDNQ45mMEd5dwUwmicsafcIX4SsNiqnCHKjE/1alYPd/lDRVhxdhUAlv8uEhMCI5zjIJQ==}
@@ -1376,7 +1376,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@literate.ink/utilities@1.0.0-10641118381.1':
+  '@literate.ink/utilities@1.0.0-11713907881.1':
     dependencies:
       set-cookie-parser: 2.7.0
 
