@@ -1,24 +1,19 @@
 import { defaultFetcher, type Fetcher, type Request } from "@literate.ink/utilities";
-import { CLIENT_TYPE, SERVICE_VERSION } from "~/core/constants";
+import { CLIENT_TYPE, createRouteREST, SERVICE_VERSION } from "~/core/constants";
 import { decodeFormattedDate } from "~/decoders/date";
-import type { Identification, Operation } from "~/models";
+import type { HomePageOperation } from "~/definitions/home-page-operation";
+import { ReauthenticateError, type Identification, type Operation } from "~/models";
+import type { Error as ServerError } from "~/definitions/error";
 
-export const OperationKind = {
-  TopUp: 0,
-  Transfer: 1,
-  Payment: 2
-} as const;
-
-export type OperationKind = typeof OperationKind[keyof typeof OperationKind];
+import { TransactionGroup } from "~/definitions/transaction-group";
+export { TransactionGroup };
 
 /**
  * @returns a list of the last operations
  */
-export const operations = async (identification: Identification, kind: OperationKind, limit = 15, fetcher: Fetcher = defaultFetcher): Promise<Array<Operation>> => {
-  // transactionGroup=2 means history of operations
-  const url = new URL(`https://rest.izly.fr/Service/PublicService.svc/rest/GetHomePageOperations?transactionGroup=${kind}&top=${limit}`);
+export const operations = async (identification: Identification, group: TransactionGroup, limit = 15, fetcher: Fetcher = defaultFetcher): Promise<Array<Operation>> => {
   const request: Request = {
-    url,
+    url: createRouteREST(`GetHomePageOperations?transactionGroup=${group}&top=${limit}`),
     headers: {
       version: "2.0",
       channel: "AIZ",
@@ -34,17 +29,26 @@ export const operations = async (identification: Identification, kind: Operation
   };
 
   const response = await fetcher(request);
-  const json = JSON.parse(response.content);
+  const json = JSON.parse(response.content) as {
+    GetHomePageOperationsResult: {
+      Result: Array<HomePageOperation>
+    }
+  } | ServerError;
 
-  return json.GetHomePageOperationsResult.Result.map((operation: any) => ({
+  if ("ErrorMessage" in json) {
+    if (json.Code === 140 || json.Code === 570)
+      throw new ReauthenticateError();
+
+    throw new Error(`${json.ErrorMessage} (${json.Code})`);
+  }
+
+  return json.GetHomePageOperationsResult.Result.map((operation) => ({
     id: operation.Id,
     amount: operation.Amount,
     date: decodeFormattedDate(operation.Date),
     isCredit: operation.IsCredit,
-    message: operation.Message as string | null,
+    message: operation.Message,
     type: operation.OperationType,
     status: operation.Status
-  } as Operation));
+  } satisfies Operation));
 };
-
-

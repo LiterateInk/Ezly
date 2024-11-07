@@ -1,19 +1,13 @@
+import { OperationType } from "~/definitions/operation-type";
+import { TransactionGroupStatus } from "~/definitions/transaction-group-status";
+export { OperationType, TransactionGroupStatus };
+
 export type Operation = Readonly<{
-  id: number
   amount: number
   date: Date
+  id: number
   isCredit: boolean
   message: string | null
-  type: 2 | 7
-  status: number
+  type: OperationType
+  status: TransactionGroupStatus
 }>;
-
-// TODO: not sure what "type" means here, is it an enum ?
-
-// on operation 0:
-// "Message": "Carte bancaire",
-// "OperationType": 7
-
-// on operation 2:
-//  "Message": null,
-// "OperationType": 2,
