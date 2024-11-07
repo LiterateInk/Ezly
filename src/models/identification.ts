@@ -19,11 +19,6 @@ export type Identification = Readonly<{
    * @from Logon.SEED
    */
   seed: string
-  /**
-   * Not relevant to users, should only be used internally.
-   * @from Logon.NSSE
-   */
-  nsse: string
 
   /**
    * Token used for SOAP requests.
@@ -46,6 +41,20 @@ export type Identification = Readonly<{
    * @from Logon.QR_CODE_PRIVATE_KEY
    */
   qrCodePrivateKey: string
+}> & {
+  /**
+   * ID of the session.
+   * Required for most requests and is renewed at when `izly.refresh()` is called.
+   * Not relevant to users, should only be used internally.
+   * @from Logon.SID
+   */
+  sessionID: string
+
+  /**
+   * Not relevant to users, should only be used internally.
+   * @from Logon.NSSE
+   */
+  nsse: string
 
   /**
    * OAuth token used for REST requests.
@@ -61,20 +70,10 @@ export type Identification = Readonly<{
   accessTokenExpiresIn: number
 
   /**
-   * Token used to refresh the OAuth token used for REST requests.
-   * If you want to refresh the token, use `izly.refresh()`.
    * Not relevant to users, should only be used internally.
    * @from Logon.OAUTH.ACCESS_TOKEN
    */
   refreshToken: string
-}> & {
-  /**
-   * ID of the session.
-   * Required for most requests and is renewed at when `izly.refresh()` is called.
-   * Not relevant to users, should only be used internally.
-   * @from Logon.SID
-   */
-  sessionID: string
 
   /**
    * Incremented each time `otp()` is called.
