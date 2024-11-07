@@ -1,10 +1,10 @@
 import { defaultFetcher, Fetcher, Request } from "@literate.ink/utilities";
-import { CLIENT_TYPE, SERVICE_VERSION } from "~/core/constants";
-import { Identification } from "~/models";
+import { CLIENT_TYPE, createRouteREST, SERVICE_VERSION } from "~/core/constants";
+import { Identification, ReauthenticateError } from "~/models";
 
 export const contact = async (identification: Identification, fetcher: Fetcher = defaultFetcher) => {
   const request: Request = {
-    url: new URL("https://rest.izly.fr/Service/PublicService.svc/rest/GetContactDetails"),
+    url: createRouteREST("GetContactDetails"),
     method: "POST",
     headers: {
       version: "1.0",
@@ -28,6 +28,13 @@ export const contact = async (identification: Identification, fetcher: Fetcher =
 
   const response = await fetcher(request);
   const json = JSON.parse(response.content);
+
+  if ("ErrorMessage" in json) {
+    if (json.Code === 140 || json.Code === 570)
+      throw new ReauthenticateError();
+
+    throw new Error(`${json.ErrorMessage} (${json.Code})`);
+  }
 
   // TODO: decode
   return json;
