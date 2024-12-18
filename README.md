@@ -14,7 +14,7 @@ Since we're implementing this library in different programming languages, we hav
 
 | [JS/TS](https://github.com/LiterateInk/Ezly/tree/js) | Rust | Python | Swift |
 | :---:  | :---: | :---: | :---: |
-| Kotlin | C# | Dart | |
+| [Kotlin](https://github.com/LiterateInk/Ezly/tree/kotlin) | C# | Dart | |
 
 ## Acknowledgements
 
